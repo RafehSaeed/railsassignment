@@ -19,6 +19,15 @@ class EncryptedString < ActiveRecord::Base
     data_encrypting_key.encrypted_key
   end
 
+# re-encrypt existing data
+
+  def self.reencrypt_data
+    EncryptedString.find_each do |estring|
+      puts estring.save
+      puts estring.value
+    end
+  end
+
   private
 
 # gets the encryption key
@@ -26,7 +35,6 @@ class EncryptedString < ActiveRecord::Base
     self.data_encrypting_key ||= DataEncryptingKey.primary
     data_encrypting_key.key
   end
-
 
 # sets a unique token
   def set_token

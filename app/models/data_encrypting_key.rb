@@ -18,11 +18,23 @@ class DataEncryptingKey < ActiveRecord::Base
 
 # use this method to rotate the key 
   def self.rotate_encrypting_key(attrs={})
-    create!(attrs.merge(key: AES.key))
-    records_array = delete_non_primary_keys();
+    
+    # set all previous keys to be false
+    sql='
+      UPDATE data_encrypting_keys D 
+      SET "primary" = false;
+    ';
 
-    sql="SELECT * FROM data_encrypting_keys";
+    # generate new key
     records_array = ActiveRecord::Base.connection.execute(sql)
+    generate!(attrs);
+
+    # reencrypt old data
+    EncryptedString.reencrypt_data();
+
+
+    # Delete non primary keys 
+    # records_array = delete_non_primary_keys();
 
     puts records_array.to_a
   end

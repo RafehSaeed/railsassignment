@@ -13,7 +13,7 @@ self.use_transactional_fixtures = false
     end
 
     assert_response :success
-
+    DataEncryptingKey.rotate_encrypting_key(primary:true)
     json = JSON.parse(response.body)
     assert json["token"]
   end

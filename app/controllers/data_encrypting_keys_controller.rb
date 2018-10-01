@@ -8,7 +8,7 @@ class DataEncryptingKeysController < ApplicationController
 
   # Return the status here 
   def status
-      
+    
   end
    
 end

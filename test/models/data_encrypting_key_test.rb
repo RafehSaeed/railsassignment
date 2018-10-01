@@ -13,4 +13,13 @@ class DataEncryptingKeyTest < ActiveSupport::TestCase
       assert key
     end
   end
+
+  test "rotate_key" do
+
+      key = DataEncryptingKey.rotate_encrypting_key(primary:true)
+
+      puts key
+   
+    end
+
 end

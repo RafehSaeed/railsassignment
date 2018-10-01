@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem 'dotenv-rails', groups: [:development, :test]
 
-
+# Sidekiq for background processes
+gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.9'
 # Use postgresql as the database for Active Record

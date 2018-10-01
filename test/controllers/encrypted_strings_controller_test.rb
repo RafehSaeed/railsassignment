@@ -1,12 +1,13 @@
 require 'test_helper'
 
 class EncryptedStringsControllerTest < ActionController::TestCase
+self.use_transactional_fixtures = false
 
   def setup
     @data_encrypting_key = DataEncryptingKey.generate!(primary: true)
   end
 
-  test "POST #create saves new EncryptedString" do
+  test "post_create_encrypted_string" do
     assert_difference "EncryptedString.count" do
       post :create, encrypted_string: { value: "to encrypt"}
     end
@@ -17,7 +18,7 @@ class EncryptedStringsControllerTest < ActionController::TestCase
     assert json["token"]
   end
 
-  test "POST #create returns invalud when value does not exist" do
+  test "POST #create returns invalid when value does not exist" do
     assert_no_difference "EncryptedString.count" do
       post :create, encrypted_string: {value: nil}
     end

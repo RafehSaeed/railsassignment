@@ -8,6 +8,8 @@ class DataEncryptingKeyTest < ActiveSupport::TestCase
   test ".generate!" do
     assert_difference "DataEncryptingKey.count" do
       key = DataEncryptingKey.generate!
+
+      puts key
       assert key
     end
   end

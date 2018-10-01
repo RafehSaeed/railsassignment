@@ -3,7 +3,10 @@ class EncryptedStringsController < ApplicationController
   before_action :load_encrypted_string, only: [:show, :destroy]
 
   def create
+
     @encrypted_string = EncryptedString.new(value: encrypted_string_params[:value])
+
+
     if @encrypted_string.save
       render json: { token: @encrypted_string.token }
     else

@@ -20,6 +20,7 @@ class DataEncryptingKey < ActiveRecord::Base
   def self.rotate_encrypting_key(attrs={})
     
     # set all previous keys to be false
+    
     sql='
       UPDATE data_encrypting_keys D 
       SET "primary" = false;
@@ -32,11 +33,9 @@ class DataEncryptingKey < ActiveRecord::Base
     # reencrypt old data
     EncryptedString.reencrypt_data();
 
-
     # Delete non primary keys 
-    # records_array = delete_non_primary_keys();
-
-    puts records_array.to_a
+    delete_non_primary_keys();
+    
   end
 
 # uses environment variable to encrypt key 

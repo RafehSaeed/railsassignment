@@ -11,9 +11,7 @@ class EncryptedString < ActiveRecord::Base
 
   before_validation :set_token, :set_data_encrypting_key
 
-
 # returns encrypted key 
-
   def encrypted_key
     self.data_encrypting_key ||= DataEncryptingKey.primary
     data_encrypting_key.encrypted_key
@@ -70,7 +68,7 @@ class EncryptedString < ActiveRecord::Base
       result = connection.execute(query)
 
       # get returned id 
-      id = reslt.to_a[0]["id"]
+      id = result.to_a[0]["id"]
       EncryptedString.update(id, :value => value);
     end
   end

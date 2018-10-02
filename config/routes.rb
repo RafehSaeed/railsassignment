@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
   resources :encrypted_strings, param: :token
 
+# using get right now just for testing purposes
   get '/data_encrypting_keys/rotate' => 'data_encrypting_keys#rotate'
   get '/data_encrypting_keys/rotate/status' => 'data_encrypting_keys#status'
   # The priority is based upon order of creation: first created -> highest priority.

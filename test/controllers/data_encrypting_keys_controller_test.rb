@@ -17,6 +17,7 @@ self.use_transactional_fixtures = false
   test "post_rotate_key" do
       post :rotate
     # DataEncryptingKey.rotate_encrypting_key(primary:true)
+    # poll and check correct status being recieved
   end
 
 end

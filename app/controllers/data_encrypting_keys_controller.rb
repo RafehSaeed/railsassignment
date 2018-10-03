@@ -4,6 +4,8 @@ class DataEncryptingKeysController < ApplicationController
   def rotate
     
   	stats = Sidekiq::Stats.new 
+
+    # also need to make sure that a job is not in progress
   	if stats.enqueued == 0 
   		  RotationWorker.perform_async()
   			render json: { message: "Key rotation has been queued"},
@@ -29,10 +31,8 @@ class DataEncryptingKeysController < ApplicationController
      end 
     
 
-# 	check to see if worker running if yes send the message that already in progress
-	# workers = Sidekiq::Workers.new
-	# workers.each do |_process_id, _thread_id, work|
- #  		p work
+# 	check to see if job is running if yes send the message that already in progress
+
 	# end
 
   end

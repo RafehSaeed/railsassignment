@@ -23,8 +23,8 @@ class DataEncryptingKeysController < ApplicationController
   def status
 
     workers = Sidekiq::Workers.new
-
   	stats = Sidekiq::Stats.new
+    
   	if stats.enqueued == 0 and workers.size == 0
 		  render json: { message: "No key rotation queued or in progress"},
 	    status: :unprocessable_entity

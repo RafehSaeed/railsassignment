@@ -5,8 +5,11 @@ class DataEncryptingKeysController < ApplicationController
     
   	stats = Sidekiq::Stats.new 
 
+    workers = Sidekiq::Workers.new
+
+    puts workers.size
     # also need to make sure that a job is not in progress
-  	if stats.enqueued == 0 
+  	if stats.enqueued == 0 and workers.size == 0
   		  RotationWorker.perform_async()
   			render json: { message: "Key rotation has been queued"},
 	    	status: :success
@@ -19,13 +22,19 @@ class DataEncryptingKeysController < ApplicationController
   # Return the status here 
   def status
 
+    workers = Sidekiq::Workers.new
+
   	stats = Sidekiq::Stats.new
-  	if stats.enqueued == 0 
+  	if stats.enqueued == 0 and workers.size == 0
 		  render json: { message: "No key rotation queued or in progress"},
 	    status: :unprocessable_entity
 
     elsif stats.enqueued > 0
       render json: { message: "Key rotation has been queued"},
+      status: :unprocessable_entity
+
+    elsif stats.enqueued == 0 and workers.size > 0
+      render json: { message: "Key rotation is in progress"},
       status: :unprocessable_entity
     
      end 

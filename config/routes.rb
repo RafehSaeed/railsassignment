@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :encrypted_strings, param: :token
 
 # using get right now just for testing purposes
-  post '/data_encrypting_keys/rotate' => 'data_encrypting_keys#rotate'
+  get '/data_encrypting_keys/rotate' => 'data_encrypting_keys#rotate'
   get '/data_encrypting_keys/rotate/status' => 'data_encrypting_keys#status'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

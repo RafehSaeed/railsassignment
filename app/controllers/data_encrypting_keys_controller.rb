@@ -2,10 +2,10 @@ class DataEncryptingKeysController < ApplicationController
 
   # Trigger the rotation mechanism here 
   def rotate
-
+    
   	stats = Sidekiq::Stats.new 
   	if stats.enqueued == 0 
-  		RotationWorker.perform_async()
+  		  RotationWorker.perform_async()
   			render json: { message: "Key rotation has been queued"},
 	    	status: :success
   	else
@@ -19,9 +19,15 @@ class DataEncryptingKeysController < ApplicationController
 
   	stats = Sidekiq::Stats.new
   	if stats.enqueued == 0 
-		render json: { message: "No key rotation queued or in progress"},
+		  render json: { message: "No key rotation queued or in progress"},
 	    status: :unprocessable_entity
-	end 
+
+    elsif stats.enqueued > 0
+      render json: { message: "Key rotation has been queued"},
+      status: :unprocessable_entity
+    
+     end 
+    
 
 # 	check to see if worker running if yes send the message that already in progress
 	# workers = Sidekiq::Workers.new

@@ -33,34 +33,16 @@ class EncryptedString < ActiveRecord::Base
         data_encrypting_key: data_encrypting_key
       })
 
-      # Delete the string associated with that token  
+      # Rencrypt string 
       sql= '
-        DELETE FROM "encrypted_strings" WHERE 
-        token = ?;
-      '
-      query = sanitize_sql([sql, params[:token] ])
-      connection.execute(query)
-   
-      # create an empty store with the token value and encrypt the string using the new key
-      sql= '
-        INSERT INTO "encrypted_strings" (
-            encrypted_value,
-            encrypted_value_iv,
-            encrypted_value_salt,
-            data_encrypting_key_id,
-            token,
-            created_at,
-            updated_at
-          ) 
-        VALUES (
-            null,
-            null,
-            null,
-            ?,
-            ?,
-            CURRENT_TIMESTAMP ,
-            CURRENT_TIMESTAMP
-          )
+        UPDATE "encrypted_strings" 
+           SET encrypted_value = null,
+            encrypted_value_iv = null,
+            encrypted_value_salt = null,
+            data_encrypting_key_id = ?,
+            created_at = CURRENT_TIMESTAMP,
+            updated_at = CURRENT_TIMESTAMP
+          WHERE token = ?
         RETURNING id
         ;
       '

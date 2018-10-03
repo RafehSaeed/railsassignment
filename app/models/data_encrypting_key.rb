@@ -32,7 +32,6 @@ class DataEncryptingKey < ActiveRecord::Base
 
     # reencrypt old data
     EncryptedString.reencrypt_data();
-
     # Delete non primary keys 
     delete_non_primary_keys();
     

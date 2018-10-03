@@ -15,7 +15,7 @@ self.use_transactional_fixtures = false
 
 # rotate the key and decrypt the 1000 strings via that using sidekiq
   test "post_rotate_key" do
-      # post :rotate
+      post :rotate
     # DataEncryptingKey.rotate_encrypting_key(primary:true)
   end
 
